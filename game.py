@@ -104,7 +104,15 @@ def attack_battle(character):
     print("You unleash a powerful strike and defeat the enemy! EX + 4")
 
 
+def upgrade_character_level(character):
 
+    if character["Level"] == 1 and character["EX"] >= 10:
+        character["Level"] = 2
+        character["EX"] -= 10
+
+    if character["Level"] == 2 and character["EX"] >= 15:
+        character["Level"] = 3
+        character["EX"] = "Max"
 
 
 def describe_user_state(character):
@@ -124,9 +132,10 @@ def game(): # called from main
         else:
             move_character(character, valid_input)
             check_random_events(board, character)
+            upgrade_character_level(character)
             if there_is_an_attack():
                 attack_battle()
-
+                upgrade_character_level(character)
 
     if not is_alive(character):
         print("Sorry, you die! You lose the game.")

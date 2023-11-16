@@ -55,7 +55,7 @@ def get_valid_user_input():
     print('Choose a direction you want to go, [(1, "north"), (2, "south"), (3, "west"), (4, "east")]')
     print('Or type in "state" to see your character states.')
     while True:
-        user_input = input("Enter 'state' or a number(1-4): ").strip()
+        user_input = input("[Enter 'state' or a number(1-4)]: ").strip()
         if user_input in input_list.keys():
             valid_input = input_list[user_input]
             return valid_input
@@ -77,6 +77,17 @@ def there_is_an_attack():
     attack = random.randint(1, 5)
     if attack == 1:
         return True
+
+
+def attack_battle():
+    enemy = random.choice(["bat", "bear", "boar", "snake"])
+    print(f"Be careful! A {enemy} emerges and launches an attack on you!")
+    print("Would you like to dodge to the right or to the left? R for right, L for left.")
+    user_input = input("[Enter R or L]: ")
+
+
+
+
 
 def describe_user_state(character):
     return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"

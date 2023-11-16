@@ -22,7 +22,7 @@ def make_board(rows, columns):
 
 def make_character(name):
     return {f"Name": {name}, "X-coordinate": 0, "Y-coordinate": 0,
-            "HP": 10, "Max HP": 10, "EX": 0}
+            "HP": 10, "Max HP": 10, "EX": 0, "Level": 1}
 
 
 def check_random_events(board, character):
@@ -41,6 +41,9 @@ def check_random_events(board, character):
         character["EX"] += 2
         print("You find a wooden chest in a pile of soil! EX + 2")
 
+def check_reach_level_3(character):
+    return character["Level"] == 3
+
 
 def get_valid_user_input():
     input_list = {"1": "N", "2": "S", "3": "W", "4": "E", "state": "state"}
@@ -54,15 +57,27 @@ def get_valid_user_input():
         else:
             print("❌ That is not a valid input, try again!")
 
+def describe_user_state(character):
+    return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"
 
 def game(): # called from main
     rows = 5
     columns = 5
     board = make_board(rows, columns)
     character = make_character("Player name")
-    check_random_events(board, character)
 
-    get_valid_user_input()
+    while not check_reach_level_3() and is_alive():
+        valid_input = get_valid_user_input()
+        if valid_input == "state":
+            print(describe_user_state(character))
+        else:
+            move_character()
+            check_random_events(board, character)
+            is_alive()
+
+
+
+
 # achieved_goal = False
 # while not achieved_goal:
 # // Tell the user where they are

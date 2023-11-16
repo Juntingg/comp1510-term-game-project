@@ -2,25 +2,27 @@
 Caroline Su
 A01369603
 """
+import random
+
 
 # health/happiness/hit points and/or other meaningful measurable
 # attributes, a level, and abilities
 
 
 def make_board(rows, columns):
+    events_choices = ["nothing", "nothing", "mushroom", "wolf", "wooden chest"]
     new_board = {}
-    for row in rows:
-        for column in columns:
-            new_board[(row, column)] = "empty room"
+    for row in range(rows):
+        for column in range(columns):
+            new_board[(row, column)] = random.choice(events_choices)
+    return new_board
 
 
 def make_character(name):
     return {f"Name": {name}, "X-coordinate": 0, "Y-coordinate": 0,
-            "HP": 5, "Max HP": 5}
+            "HP": 10, "Max HP": 10, "EX": 0}
 
 
-def describe_current_location(board, character):
-    pass
 
 
 def get_user_choice():

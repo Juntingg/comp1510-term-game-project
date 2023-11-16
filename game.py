@@ -84,6 +84,11 @@ def dodge_attack():
     return enemy_attack
 
 
+# def enemy_dodge_attack():
+#     enemy_dodge = random.randint(1, 4)
+#     if enemy_dodge == 1:
+#         return True
+
 def attack_battle(character):
     enemy = random.choice(["bat", "bear", "boar", "snake"])
     print(f"Be careful! A {enemy} emerges and launches an attack on you!")
@@ -94,6 +99,9 @@ def attack_battle(character):
     else:
         character["HP"] -= 2
         print("Oh no! You did not dodge the attack! HP - 2")
+
+    character["EX"] += 4
+    print("You unleash a powerful strike and defeat the enemy! EX + 4")
 
 
 

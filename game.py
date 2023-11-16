@@ -63,6 +63,17 @@ def get_valid_user_input():
             print("❌ That is not a valid input, try again!")
 
 
+def move_character(character, direction):
+    if direction == "N":
+        character["Y-coordinate"] -= 1
+    elif direction == "S":
+        character["Y-coordinate"] += 1
+    elif direction == "E":
+        character["X-coordinate"] += 1
+    elif direction == "W":
+        character["X-coordinate"] -= 1
+
+
 def describe_user_state(character):
     return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"
 
@@ -71,16 +82,20 @@ def game(): # called from main
     rows = 5
     columns = 5
     board = make_board(rows, columns)
-    character = make_character("Player name")
+    character = make_character("Caroline")
 
-    while not check_reach_level_3() and is_alive():
+    while not check_reach_level_3(character) and is_alive(character):
         valid_input = get_valid_user_input()
         if valid_input == "state":
             print(describe_user_state(character))
         else:
-            move_character()
+            move_character(character, valid_input)
             check_random_events(board, character)
-            is_alive()
+            is_there_an_attack()
+
+    if not is_alive(character):
+        print("Sorry, you die! You lose the game.")
+    else:
 
 
 

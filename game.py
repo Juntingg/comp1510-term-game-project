@@ -41,8 +41,13 @@ def check_random_events(board, character):
         character["EX"] += 2
         print("You find a wooden chest in a pile of soil! EX + 2")
 
+
 def check_reach_level_3(character):
     return character["Level"] == 3
+
+
+def is_alive(character):
+    return character["HP"] == 3
 
 
 def get_valid_user_input():
@@ -57,8 +62,10 @@ def get_valid_user_input():
         else:
             print("❌ That is not a valid input, try again!")
 
+
 def describe_user_state(character):
     return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"
+
 
 def game(): # called from main
     rows = 5

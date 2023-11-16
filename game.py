@@ -15,6 +15,8 @@ def make_board(rows, columns):
     for row in range(rows):
         for column in range(columns):
             new_board[(row, column)] = random.choice(events_choices)
+
+    new_board[(0, 0)] = ""
     return new_board
 
 
@@ -40,15 +42,17 @@ def check_random_events(board, character):
         print("You find a wooden chest in a pile of soil! EX + 2")
 
 
-def get_user_choice():
-
-    direction_list = [(1, "north"), (2, "south"), (3, "west"), (4, "east")]
-    print("Choose a direction you want to go,", direction_list)
-    if True:
-        user_input = int(input("Enter a number(1-4): "))
-        if user_input in range(1, 5):
-            direction = direction_list[user_input - 1][1]
-            return direction
+def get_valid_user_input():
+    input_list = {"1": "N", "2": "S", "3": "W", "4": "E", "state": "state"}
+    print('Choose a direction you want to go, [(1, "north"), (2, "south"), (3, "west"), (4, "east")]')
+    print('Or type in "state" to see your character states.')
+    while True:
+        user_input = input("Enter 'state' or a number(1-4): ").strip()
+        if user_input in input_list.keys():
+            valid_input = input_list[user_input]
+            return valid_input
+        else:
+            print("❌ That is not a valid input, try again!")
 
 
 def game(): # called from main
@@ -56,6 +60,9 @@ def game(): # called from main
     columns = 5
     board = make_board(rows, columns)
     character = make_character("Player name")
+    check_random_events(board, character)
+
+    get_valid_user_input()
 # achieved_goal = False
 # while not achieved_goal:
 # // Tell the user where they are
@@ -74,6 +81,7 @@ def game(): # called from main
 # else:
 # // Tell the user they can’t go in that direction
 # // Print end of game stuff like congratulations or sorry you died
+
 
 def main():
     pass

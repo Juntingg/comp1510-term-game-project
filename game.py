@@ -73,6 +73,10 @@ def move_character(character, direction):
     elif direction == "W":
         character["X-coordinate"] -= 1
 
+def there_is_an_attack():
+    attack = random.randint(1, 5)
+    if attack == 1:
+        return True
 
 def describe_user_state(character):
     return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"
@@ -91,7 +95,9 @@ def game(): # called from main
         else:
             move_character(character, valid_input)
             check_random_events(board, character)
-            is_there_an_attack()
+            if there_is_an_attack():
+                attack_battle()
+
 
     if not is_alive(character):
         print("Sorry, you die! You lose the game.")

@@ -80,7 +80,7 @@ def there_is_an_attack():
         return True
 
 
-def dodge_attack():
+def dodge_enemy_attack():
     enemy_attack = random.choice(["R", "L"])
     return enemy_attack
 
@@ -95,7 +95,7 @@ def attack_battle(character):
     print(f"Be careful! A {enemy} emerges and launches an attack on you!")
     print("Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)")
     user_dodge = input("R for right, L for left. [Enter R or L]: ")
-    if user_dodge.strip().upper()[0] == dodge_attack():
+    if user_dodge.strip().upper()[0] == dodge_enemy_attack():
         print("Nice! You dodge the attack!")
     else:
         character["HP"] -= 2
@@ -109,11 +109,15 @@ def upgrade_character_level(character):
 
     if character["Level"] == 1 and character["EX"] >= 10:
         character["Level"] = 2
+        character["Max HP"] = 15
         character["EX"] -= 10
+        print("Congratulation! You are Level 2 now!")
 
     if character["Level"] == 2 and character["EX"] >= 15:
         character["Level"] = 3
+        character["Max HP"] = 20
         character["EX"] = "Max"
+        print("Congratulation! You are Level 3 now!")
 
 
 def describe_user_state(character):
@@ -123,6 +127,27 @@ def describe_user_state(character):
 def is_arrived_castle(character):
     if character["X-coordinate"] == 4 and character["Y-coordinate"] == 4:
         return True
+
+
+def final_fight(character):
+    narration_list = ["The dragon is furious and swiped at you with a mighty paw.",
+                      "He lunges forward, its massive jaws opening wide as searing flames shoot forth.",
+                      "The dragon's colossal wings beat forcefully, creating gusts of wind",
+                      "The dragon roars at you!"]
+    for count in range(3):
+        print(narration_list[count])
+        print("Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)")
+        user_dodge = input("R for right, L for left. [Enter R or L]: ")
+        if user_dodge.strip().upper()[0] == dodge_enemy_attack():
+            print("Nice! You dodge the attack!")
+        else:
+            character["HP"] -= 5
+            print("Oh no! You did not dodge the attack! HP - 5")
+
+        if not is_alive(character):
+            print("Sorry, you die! You lose the game.")
+            return
+        print("You gather all your focus and deliver a mighty strike aimed at the dragon.")
 
 
 def game():  # called from main
@@ -146,30 +171,14 @@ def game():  # called from main
     if not is_alive(character):
         print("Sorry, you die! You lose the game.")
     else:
-        print("Congratulation! You are Level 3 now!")
         print("It is time for you to defeat the dragon in the dark castle and get the the treasure.")
         print("Please go to the south east corner of the forest!")
-
-
-
-# achieved_goal = False
-# while not achieved_goal:
-# // Tell the user where they are
-# describe_current_location(board, character)
-# direction = get_user_choice( )
-# valid_move = validate_move(board, character, direction)
-# if valid_move:
-# move_character(character)
-# describe_current_location(board, character)
-# there_is_a_challenge = check_for_challenges()
-# if there_is_a_challenge:
-# execute_challenge_protocol(character)
-# if character_has_leveled():
-# execute_glow_up_protocol()
-# achieved_goal = check_if_goal_attained(board, character)
-# else:
-# // Tell the user they can’t go in that direction
-# // Print end of game stuff like congratulations or sorry you died
+        if is_arrived_castle(character):
+            print("Your arrival wake up the dragon!")
+            final_fight(character)
+            print("You gather all your focus and deliver a mighty strike aimed at the dragon.")
+            print("You persistently battled and defeated the dragon. Finally, roaring in protest, the dragon fell.\n" +
+                  "In a secluded corner, you discovered the treasure.")
 
 
 def main():

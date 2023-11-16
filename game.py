@@ -23,6 +23,21 @@ def make_character(name):
             "HP": 10, "Max HP": 10, "EX": 0}
 
 
+def check_random_events(board, character):
+    print("You look around.")
+    x_index = character["X-coordinate"]
+    y_index = character["Y-coordinate"]
+    if board[(x_index, y_index)] == "nothing":
+        print("After a gust of wind passed by, the surroundings became even quieter. You decide to move forward.")
+    elif board[(x_index, y_index)] == "mushroom":
+        character["HP"] += 1
+        print("You pick up a mushroom and eat it. You feel you are full of energy! HP + 1")
+    elif board[(x_index, y_index)] == "wolf":
+        character["HP"] -= 1
+        print("A wolf attack you. HP - 1")
+    else:
+        character["EX"] += 2
+        print("You find a wooden chest in a pile of soil! EX + 2")
 
 
 def get_user_choice():

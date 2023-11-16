@@ -73,6 +73,7 @@ def move_character(character, direction):
     elif direction == "W":
         character["X-coordinate"] -= 1
 
+
 def there_is_an_attack():
     attack = random.randint(1, 5)
     if attack == 1:
@@ -119,7 +120,12 @@ def describe_user_state(character):
     return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"
 
 
-def game(): # called from main
+def is_arrived_castle(character):
+    if character["X-coordinate"] == 4 and character["Y-coordinate"] == 4:
+        return True
+
+
+def game():  # called from main
     rows = 5
     columns = 5
     board = make_board(rows, columns)
@@ -134,13 +140,15 @@ def game(): # called from main
             check_random_events(board, character)
             upgrade_character_level(character)
             if there_is_an_attack():
-                attack_battle()
+                attack_battle(character)
                 upgrade_character_level(character)
 
     if not is_alive(character):
         print("Sorry, you die! You lose the game.")
     else:
-
+        print("Congratulation! You are Level 3 now!")
+        print("It is time for you to defeat the dragon in the dark castle and get the the treasure.")
+        print("Please go to the south east corner of the forest!")
 
 
 

@@ -79,11 +79,21 @@ def there_is_an_attack():
         return True
 
 
-def attack_battle():
+def dodge_attack():
+    enemy_attack = random.choice(["R", "L"])
+    return enemy_attack
+
+
+def attack_battle(character):
     enemy = random.choice(["bat", "bear", "boar", "snake"])
     print(f"Be careful! A {enemy} emerges and launches an attack on you!")
-    print("Would you like to dodge to the right or to the left? R for right, L for left.")
-    user_input = input("[Enter R or L]: ")
+    print("Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)")
+    user_dodge = input("R for right, L for left. [Enter R or L]: ")
+    if user_dodge.strip().upper()[0] == dodge_attack():
+        print("Nice! You dodge the attack!")
+    else:
+        character["HP"] -= 2
+        print("Oh no! You did not dodge the attack! HP - 2")
 
 
 

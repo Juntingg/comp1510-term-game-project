@@ -5,23 +5,32 @@ A01369603
 import random
 
 
-# health/happiness/hit points and/or other meaningful measurable
-# attributes, a level, and abilities
-
-
 def make_board(rows, columns):
     events_choices = ["nothing", "nothing", "mushroom", "wolf", "wooden chest"]
     new_board = {}
     for row in range(rows):
         for column in range(columns):
             new_board[(row, column)] = random.choice(events_choices)
+    # the right bottom corner of the game board must be a fixed value "castle"
+    new_board[(rows, columns)] = "castle"
 
     new_board[(0, 0)] = ""
     return new_board
 
 
 def make_character(name):
-    return {f"Name": {name}, "X-coordinate": 0, "Y-coordinate": 0,
+    """
+
+    :param name:
+    :return:
+
+    >>> make_character("Bob")
+    {'Name': 'Bob', 'X-coordinate': 0, 'Y-coordinate': 0, 'HP': 10, 'Max HP': 10, 'EX': 0, 'Level': 1}
+
+    >>> make_character("Caroline")
+    {'Name': 'Caroline', 'X-coordinate': 0, 'Y-coordinate': 0, 'HP': 10, 'Max HP': 10, 'EX': 0, 'Level': 1}
+    """
+    return {"Name": name, "X-coordinate": 0, "Y-coordinate": 0,
             "HP": 10, "Max HP": 10, "EX": 0, "Level": 1}
 
 
@@ -43,11 +52,24 @@ def check_random_events(board, character):
 
 
 def check_reach_level_3(character):
+    """
+
+    :param character:
+    :return:
+
+    >>> my_char = {'Name': 'Bob', 'X-coordinate': 0, 'Y-coordinate': 0, 'HP': 10, 'Max HP': 10, 'EX': 0, 'Level': 2}
+    >>> check_reach_level_3(my_char)
+    False
+
+    >>> my_char = {'Name': 'Joy', 'X-coordinate': 0, 'Y-coordinate': 0, 'HP': 10, 'Max HP': 10, 'EX': 0, 'Level': 3}
+    >>> check_reach_level_3(my_char)
+    True
+    """
     return character["Level"] == 3
 
 
 def is_alive(character):
-    return character["HP"] == 3
+    return character["HP"] > 0
 
 
 def get_valid_user_input():
@@ -59,9 +81,24 @@ def get_valid_user_input():
         if user_input in input_list.keys():
             valid_input = input_list[user_input]
             return valid_input
+        # return "N", "S", "W", "E"
         else:
             print("❌ That is not a valid input, try again!")
 
+
+def validate_move(board, character, direction):
+    x_max_coordinator = max((key[0]) for key in board.keys())
+    y_max_coordinator = max((key[1]) for key in board.keys())
+    if character["X-coordinate"] == x_max_coordinator and direction == "E":
+        return False
+    elif character["X-coordinate"] == 0 and direction == "W":
+        return False
+    elif character["Y-coordinate"] == 0 and direction == "N":
+        return False
+    elif character["Y-coordinate"] == y_max_coordinator and direction == "S":
+        return False
+
+    return True
 
 def move_character(character, direction):
     if direction == "N":
@@ -73,7 +110,7 @@ def move_character(character, direction):
     elif direction == "W":
         character["X-coordinate"] -= 1
 
-
+# boardary
 def there_is_an_attack():
     attack = random.randint(1, 5)
     if attack == 1:
@@ -109,15 +146,17 @@ def upgrade_character_level(character):
 
     if character["Level"] == 1 and character["EX"] >= 10:
         character["Level"] = 2
+        character["HP"] = 15
         character["Max HP"] = 15
         character["EX"] -= 10
-        print("Congratulation! You are Level 2 now!")
+        print("Congratulation! You are Level 2 now! You feel stronger than before! You current HP: 15/15")
 
     if character["Level"] == 2 and character["EX"] >= 15:
         character["Level"] = 3
+        character["HP"] = 15
         character["Max HP"] = 20
         character["EX"] = "Max"
-        print("Congratulation! You are Level 3 now!")
+        print("Congratulation! You are Level 3 now! You feel stronger than before! You current HP: 20/20")
 
 
 def describe_user_state(character):
@@ -161,12 +200,13 @@ def game():  # called from main
         if valid_input == "state":
             print(describe_user_state(character))
         else:
-            move_character(character, valid_input)
-            check_random_events(board, character)
-            upgrade_character_level(character)
-            if there_is_an_attack():
-                attack_battle(character)
+            if validate_move(board, character, valid_input):
+                move_character(character, valid_input)
+                check_random_events(board, character)
                 upgrade_character_level(character)
+                if there_is_an_attack():
+                    attack_battle(character)
+                    upgrade_character_level(character)
 
     if not is_alive(character):
         print("Sorry, you die! You lose the game.")

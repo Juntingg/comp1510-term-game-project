@@ -31,24 +31,25 @@ def make_character(name):
     {'Name': 'Caroline', 'X-coordinate': 0, 'Y-coordinate': 0, 'HP': 10, 'Max HP': 10, 'EX': 0, 'Level': 1}
     """
     return {"Name": name, "X-coordinate": 0, "Y-coordinate": 0,
-            "HP": 10, "Max HP": 10, "EX": 0, "Level": 1}
+            "HP": 10, "Max HP": 10, "EX": 0, "Level": 1, "key": False}
 
 
 def check_random_events(board, character):
     print("You look around.")
     x_index = character["X-coordinate"]
     y_index = character["Y-coordinate"]
-    if board[(x_index, y_index)] == "nothing":
-        print("After a gust of wind passed by, the surroundings became even quieter. You decide to move forward.")
-    elif board[(x_index, y_index)] == "mushroom":
-        character["HP"] += 1
-        print("You pick up a mushroom and eat it. You feel you are full of energy! HP + 1")
-    elif board[(x_index, y_index)] == "wolf":
-        character["HP"] -= 1
-        print("A wolf attack you. HP - 1")
-    else:
-        character["EX"] += 2
-        print("You find a wooden chest in a pile of soil! EX + 2")
+    if not check_reach_level_3(character):
+        if board[(x_index, y_index)] == "nothing":
+            print("After a gust of wind passed by, the surroundings became even quieter. You decide to move forward.")
+        elif board[(x_index, y_index)] == "mushroom":
+            character["HP"] += 1
+            print("You pick up a mushroom and eat it. You feel you are full of energy! HP + 1")
+        elif board[(x_index, y_index)] == "wolf":
+            character["HP"] -= 1
+            print("A wolf attack you. HP - 1")
+        else:
+            character["EX"] += 2
+            print("You find a wooden chest in a pile of soil! EX + 2")
 
 
 def check_reach_level_3(character):
@@ -100,6 +101,7 @@ def validate_move(board, character, direction):
 
     return True
 
+
 def move_character(character, direction):
     if direction == "N":
         character["Y-coordinate"] -= 1
@@ -110,7 +112,7 @@ def move_character(character, direction):
     elif direction == "W":
         character["X-coordinate"] -= 1
 
-# boardary
+
 def there_is_an_attack():
     attack = random.randint(1, 5)
     if attack == 1:
@@ -163,8 +165,8 @@ def describe_user_state(character):
     return f"Name:${character['Name']} HP:${character['HP']}/${'Max HP'} EX:${character['EX']}"
 
 
-def is_arrived_castle(character):
-    if character["X-coordinate"] == 4 and character["Y-coordinate"] == 4:
+def is_arrived_castle(character, rows, columns):
+    if character["X-coordinate"] == rows and character["Y-coordinate"] == columns:
         return True
 
 
@@ -189,6 +191,15 @@ def final_fight(character):
         print("You gather all your focus and deliver a mighty strike aimed at the dragon.")
 
 
+def movement_and_event(character, board, direction):
+    move_character(character, direction)
+    check_random_events(board, character)
+    upgrade_character_level(character)
+    if there_is_an_attack():
+        attack_battle(character)
+        upgrade_character_level(character)
+
+
 def game():  # called from main
     rows = 5
     columns = 5
@@ -197,28 +208,32 @@ def game():  # called from main
 
     while not check_reach_level_3(character) and is_alive(character):
         valid_input = get_valid_user_input()
+
         if valid_input == "state":
             print(describe_user_state(character))
         else:
+            # if the character is not at the boundary and the direction is valid
             if validate_move(board, character, valid_input):
-                move_character(character, valid_input)
-                check_random_events(board, character)
-                upgrade_character_level(character)
-                if there_is_an_attack():
-                    attack_battle(character)
-                    upgrade_character_level(character)
+                movement_and_event(character, board, valid_input)
+            # character is at the boundary
+            else:
+                print("🌳 You have reached the edge of the forest. You cannot go further in this direction!")
 
     if not is_alive(character):
         print("Sorry, you die! You lose the game.")
     else:
         print("It is time for you to defeat the dragon in the dark castle and get the the treasure.")
         print("Please go to the south east corner of the forest!")
-        if is_arrived_castle(character):
-            print("Your arrival wake up the dragon!")
-            final_fight(character)
-            print("You gather all your focus and deliver a mighty strike aimed at the dragon.")
-            print("You persistently battled and defeated the dragon. Finally, roaring in protest, the dragon fell.\n" +
-                  "In a secluded corner, you discovered the treasure.")
+        if is_arrived_castle(character, rows, columns):
+            # if character have found the key
+            if character["key"]:
+                print("Your arrival wake up the dragon!")
+                final_fight(character)
+                print("You gather all your focus and deliver a mighty strike aimed at the dragon.")
+                print("You persistently battled and defeated the dragon. Finally, roaring in protest, "
+                      "the dragon fell.\n" + "In a secluded corner, you discovered the treasure.")
+            else:
+                print("You have not get the key to enter the castle. Please check around the forest!")
 
 
 def main():

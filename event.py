@@ -3,8 +3,32 @@ ADD A DOCSTRING
 """
 import random
 
-from game import get_valid_user_input, get_valid_direction
 
+def get_valid_user_input():
+    direction_list = ["N", "S", "W", "E", "STATE", "HELP"]
+    while True:
+        user_input = input("[Enter 'help' or a direction to move]: ").strip()
+        if user_input.upper() in direction_list:
+            return user_input.upper()
+        # return "N", "S", "W", "E", "state", "help"
+        else:
+            print("❌ That is not a valid input, try again!")
+
+
+def get_valid_direction(character, valid_input):
+    if valid_input == "STATE":
+        describe_user_state(character)
+    elif valid_input == "HELP":
+        print("---------------------------------------------------------------------------------------\n"
+              "You will control the character's movement direction using the four keys:\n"
+              " 1.'N' for north direction\n"
+              " 2.'S' for south direction\n"
+              " 3.'E' for east direction\n"
+              " 4.'W' for west direction\n"
+              "You can also input 'state' to check your character's attributes or 'help' to get instruction.\n"
+              "---------------------------------------------------------------------------------------\n")
+    else:
+        return valid_input
 
 def game_introduction():
     print("You are a warrior. It is said that within a forest lies a mysterious castle guarded\n"
@@ -25,6 +49,7 @@ def game_introduction():
           "But even in dire circumstances, an unwavering heart might bring you a miracle. So, adventurer,\n"
           "may your journey be successful!")
 
+
 def make_board(rows, columns):
     events_choices = ["nothing", "mushroom", "mushroom", "wolf", "wolf", "wooden chest"]
     new_board = {}
@@ -40,7 +65,6 @@ def make_board(rows, columns):
         hole_y = random.randint(0, 4)
     new_board[(hole_x, hole_y)] = "hole"
     return new_board
-
 
 
 def check_reach_level_3(character):
@@ -62,10 +86,8 @@ def check_reach_level_3(character):
 
 def describe_user_state(character):
     print(f"Your current location: ({character['X-coordinate']},{character['Y-coordinate']})")
-    print(f"Name:{character['Name']} HP:{character['HP']}/{character['Max HP']} EX:{character['EX']} \
+    print(f"HP:{character['HP']}/{character['Max HP']} EX:{character['EX']} \
           Level:{character['Level']}")
-
-
 
 
 def trigger_random_events(board, character):
@@ -74,7 +96,7 @@ def trigger_random_events(board, character):
     y_index = character["Y-coordinate"]
 
     if board[(x_index, y_index)] == "nothing":
-        print("🍂 After a gust of wind passed by, the surroundings became even quieter. You decide to move forward.")
+        print("🍂 After a gust of wind passed by, the surroundings became even quieter. Nothing happened.")
     elif board[(x_index, y_index)] == "mushroom":
         character["HP"] += 1
         print("🍄 You pick up a mushroom and eat it. You feel you are full of energy! HP + 1")
@@ -96,12 +118,14 @@ def trigger_random_events(board, character):
     if board[(x_index, y_index)] != "castle":
         board[(x_index, y_index)] = "traveled"
     print(board)
+
+
 def trigger_hole_event(character):
     distance = [40, 40]
     counter = 0
     while distance[0] != 0 or distance[1] != 0:
-        input = get_valid_user_input()
-        direction = get_valid_direction(character, input)
+        user_input = get_valid_user_input()
+        direction = get_valid_direction(character, user_input)
         counter += 1
         if counter == 40:
             print("It seems like you've been wandering around in the cave for too long, feeling exhausted.\n"
@@ -125,8 +149,3 @@ def trigger_hole_event(character):
     character["key"] = True
     print("Look what you've found! It seems to be a key... Could it be meant for opening the gates of the castle?\n"
           "Before you could ponder further, a mysterious force transports you out of the hole.")
-
-
-
-
-

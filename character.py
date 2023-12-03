@@ -50,6 +50,12 @@ def move_character(character, direction):
         character["X-coordinate"] += 1
     elif direction == "W":
         character["X-coordinate"] -= 1
+    print(character["X-coordinate"], character["Y-coordinate"])
+
+
+def is_arrived_castle(character, rows, columns):
+    if character["X-coordinate"] == (rows - 1) and character["Y-coordinate"] == (columns - 1):
+        return True
 
 
 def upgrade_character_level(character):

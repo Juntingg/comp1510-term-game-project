@@ -66,7 +66,7 @@ def ask_dodge_direction():
     print("Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)")
     user_dodge = input("R for right 👉, L for left 👈. [Enter R or L]: ").strip().upper()
     while user_dodge not in ["L", "R"]:
-        print("That is not a valid input. Please try again!")
+        print("❌ That is not a valid input. Please try again!")
         user_dodge = input("R for right 👉, L for left 👈. [Enter R or L]: ").strip().upper()
     return user_dodge
 

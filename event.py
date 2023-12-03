@@ -1,7 +1,7 @@
 """
-ADD A DOCSTRING
+Caroline Su
+A01369603
 """
-import random
 
 
 def get_valid_user_input():
@@ -16,56 +16,20 @@ def get_valid_user_input():
 
 
 def get_valid_direction(character, valid_input):
-    if valid_input == "STATE":
-        describe_user_state(character)
-    elif valid_input == "HELP":
-        print("---------------------------------------------------------------------------------------\n"
-              "You will control the character's movement direction using the four keys:\n"
-              " 1.'N' for north direction\n"
-              " 2.'S' for south direction\n"
-              " 3.'E' for east direction\n"
-              " 4.'W' for west direction\n"
-              "You can also input 'state' to check your character's attributes or 'help' to get instruction.\n"
-              "---------------------------------------------------------------------------------------\n")
-    else:
-        return valid_input
-
-
-def game_introduction():
-    print("You are a warrior. It is said that within a forest lies a mysterious castle guarded\n"
-          "by a dragon, protecting a treasure. Today, armed with your courage and sword, you\n"
-          "arrive here. To win the game, you need to\n"
-          " 1. level up your character to level 3.\n"
-          " 2. find the key to open the castle gate.\n"
-          " 3. defeat the dragon.\n"
-          "---------------------------------------------------------------------------------------\n"
-          "You will control the character's movement direction using the four keys:\n"
-          " 1.'N' for north direction\n"
-          " 2.'S' for south direction\n"
-          " 3.'E' for east direction\n"
-          " 4.'W' for west direction\n"
-          "You can also input 'state' to check your character's attributes or 'help' to get instruction.\n"
-          "---------------------------------------------------------------------------------------\n"
-          "Many have ventured into this forest, only to return empty-handed or never return at all.\n"
-          "But even in dire circumstances, an unwavering heart might bring you a miracle. So, adventurer,\n"
-          "may your journey be successful!")
-
-
-def make_board(rows, columns):
-    events_choices = ["nothing", "mushroom", "mushroom", "wolf", "wolf", "wooden chest"]
-    new_board = {}
-    for row in range(rows):
-        for column in range(columns):
-            new_board[(row, column)] = random.choice(events_choices)
-    # the right bottom corner of the game board must be a fixed value "castle"
-    new_board[(rows - 1, columns - 1)] = "castle"
-    new_board[(0, 0)] = "begin"
-    hole_x, hole_y = 4, 4
-    while (hole_x == 4 and hole_y == 4) or (hole_x == 0 and hole_y == 0):
-        hole_x = random.randint(0, 4)
-        hole_y = random.randint(0, 4)
-    new_board[(hole_x, hole_y)] = "hole"
-    return new_board
+    while valid_input in ["STATE", "HELP"]:
+        if valid_input == "STATE":
+            describe_user_state(character)
+        else:
+            print("---------------------------------------------------------------------------------------\n"
+                  "You will control the character's movement direction using the four keys:\n"
+                  " 1.'N' for north direction\n"
+                  " 2.'S' for south direction\n"
+                  " 3.'E' for east direction\n"
+                  " 4.'W' for west direction\n"
+                  "You can also input 'state' to check your character's attributes or 'help' to get instruction.\n"
+                  "---------------------------------------------------------------------------------------\n")
+        valid_input = get_valid_user_input()
+    return valid_input
 
 
 def check_reach_level_3(character):
@@ -113,7 +77,7 @@ def trigger_random_events(board, character):
     elif board[(x_index, y_index)] == "castle" and not check_reach_level_3(character):
         print("A gruesome castle stands in front of you...\n"
               "🔒 But you have not get the key or reach level 3 to enter the castle. Please explore more!")
-    else:
+    elif board[(x_index, y_index)] == "wooden chest":
         character["EX"] += 1
         print("🌈 You find a wooden chest in a pile of soil! EX + 1")
     if board[(x_index, y_index)] != "castle":
@@ -122,7 +86,8 @@ def trigger_random_events(board, character):
 
 
 def hole_movement(distance, user_input):
-    if distance[0] >= 80 or distance[0] <= -40 or distance[1] >= 80 or distance[1] <= -40:
+    if ((distance[0] >= 80 and user_input == "S") or (distance[0] <= -40 and user_input == "N")
+            or (distance[1] >= 80 and user_input == "W") or (distance[1] <= -40) and user_input == "E"):
         print("It seems like you are going too far? Maybe try the opposite direction...")
     if user_input == "N":
         distance[0] -= 10
@@ -158,4 +123,5 @@ def trigger_hole_event(character):
 
     character["key"] = True
     print("Look what you've gotten! It seems to be a key... Could it be meant for opening the gates of the castle?\n"
-          "Before you could ponder further, a mysterious force transports you out of the hole.")
+          "Before you could ponder further, a mysterious force transports you out of the hole."
+          "Please continue to explore the forest...")

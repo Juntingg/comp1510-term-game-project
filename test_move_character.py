@@ -1,5 +1,6 @@
 """
-ADD A DOCSTRING
+Caroline Su
+A01369603
 """
 from unittest import TestCase
 from character import move_character

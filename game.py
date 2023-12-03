@@ -9,6 +9,11 @@ import event
 
 
 def game_introduction():
+    """
+    Introduce the game to the player
+
+    :postcondition: Print the game introduction and instructions to the player
+    """
     print("You are a warrior. It is said that within a forest lies a mysterious castle guarded\n"
           "by a dragon, protecting a treasure. Today, armed with your courage and sword, you\n"
           "arrive here. To win the game, you need to\n"
@@ -28,7 +33,7 @@ def game_introduction():
           "may your journey be successful!")
 
 
-def make_board(rows, columns):
+def make_board(rows, columns, my_character):
     events_choices = ["nothing", "mushroom", "mushroom", "wolf", "wolf", "wooden chest"]
     new_board = {}
     for row in range(rows):
@@ -42,6 +47,7 @@ def make_board(rows, columns):
         hole_x = random.randint(0, 4)
         hole_y = random.randint(0, 4)
     new_board[(hole_x, hole_y)] = "hole"
+    my_character["hole"] = (hole_x, hole_y)
     return new_board
 
 
@@ -62,14 +68,14 @@ def validate_move(board, my_character, direction):
 
 def game():  # called from main
     """
-    Run the game
+    Start a new game
     """
     # initiate the game configuration
     game_introduction()
+    my_character = character.make_character()
     rows = 5
     columns = 5
-    board = make_board(rows, columns)
-    my_character = character.make_character()
+    board = make_board(rows, columns, my_character)
     key_reminder = False
     dragon_reminder = False
     while True:
@@ -112,8 +118,14 @@ def game():  # called from main
 
 
 def main():
+    """
+    Run the game
+    """
     game()
 
 
 if __name__ == "__main__":
+    """
+    Run the main function
+    """
     main()

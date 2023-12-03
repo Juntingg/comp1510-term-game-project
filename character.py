@@ -24,11 +24,12 @@ def move_character(character, direction):
 
     Update the array that represent character's attributes and location according to the direction
 
-    :precondition: character must be a dictionary
+    :precondition: character must be a dictionary with 'X-coordinate' and 'Y-coordinate' keys
     :precondition: direction must be a letter of "S", "N", "W" or "E"
-    :param character: a dictionary represent the character
-    :param direction: a single character represent the direction
-    :postcondition: update X or Y coordinate of the dictionary represent the character
+    :param character: a dictionary representing the character
+    :param direction: a single uppercase character representing the direction
+    :postcondition: update X or Y coordinate of the dictionary representing the character
+                    according to the specific direction
 
     >>> new_char = {'X-coordinate': 3, 'Y-coordinate': 3, 'HP': 6, 'Max HP': 10, 'EX': 0, 'Level': 1, 'key': False}
     >>> new_direction = "E"
@@ -50,37 +51,51 @@ def move_character(character, direction):
         character["X-coordinate"] += 1
     elif direction == "W":
         character["X-coordinate"] -= 1
-    print(character["X-coordinate"], character["Y-coordinate"])
 
 
 def is_arrived_castle(character, rows, columns):
-    if character["X-coordinate"] == (rows - 1) and character["Y-coordinate"] == (columns - 1):
-        return True
+    """
+    Check if the character has arrived at the castle based on its coordinates
+
+    :precondition: The 'character' parameter must be a dictionary with 'X-coordinate' and 'Y-coordinate' keys.
+    :precondition: 'rows' and 'columns' must be positive integers representing the dimensions of the grid.
+    :param character: A dictionary representing the character's position with 'X-coordinate' and 'Y-coordinate'
+    :param rows: An integer representing the total number of rows in the grid
+    :param columns: An integer representing the total number of columns in the grid
+    :postcondition: Return True if the character's position matches the bottom-right corner of the grid,
+                    otherwise return False
+    :return: A boolean value indicating whether the character has arrived at the castle
+
+    >>> is_arrived_castle({"X-coordinate": 4, "Y-coordinate": 4}, 5, 5)
+    True
+    >>> is_arrived_castle({"X-coordinate": 2, "Y-coordinate": 4}, 5, 5)
+    False
+    """
+    return character["X-coordinate"] == (rows - 1) and character["Y-coordinate"] == (columns - 1)
 
 
 def upgrade_character_level(character):
     """
-    Upgrade character
+    Update character level
 
-    Upgrade character and increase his HP if his EX value reach to a certain value
+    Update the character's level and attributes based on experience points (EX).
 
-    :precondition: character must be a dictionary
-    :param character: the dictionary represent the character
-    :postcondition: update Level and HP attributes value of the character
+    :precondition: The 'character' parameter must be a dictionary containing 'Level' and 'EX' keys
+    :param character: A dictionary representing the character's attributes
+    :postcondition: Updates the 'character' dictionary based on the experience points (EX):
 
-    >>> new_char = {'X-coordinate': 2, 'Y-coordinate': 1, 'HP': 10, 'Max HP': 10, 'EX': 13, 'Level': 1, 'key': False}
+    >>> new_char = {"Level": 1, "EX": 12, "HP": 10, "Max HP": 10}
     >>> upgrade_character_level(new_char)
     🎊 Congratulation! You are Level 2 now! You feel more powerful than before!
     Your courage has earned the recognition of the gods. You are now fully healed. Current HP: 15/15
     >>> new_char
-    {'X-coordinate': 2, 'Y-coordinate': 1, 'HP': 15, 'Max HP': 15, 'EX': 3, 'Level': 2, 'key': False}
-
-    >>> new_char = {'X-coordinate': 2, 'Y-coordinate': 1, 'HP': 10, 'Max HP': 10, 'EX': 20, 'Level': 2, 'key': False}
+    {'Level': 2, 'EX': 2, 'HP': 15, 'Max HP': 15}
+    >>> new_char = {"Level": 2, "EX": 20, "HP": 15, "Max HP": 15}
     >>> upgrade_character_level(new_char)
     🎊 Congratulation! You are Level 3 now! You feel more powerful than before!
     Your courage has earned the recognition of the gods. You are now fully healed. Current HP: 20/20
     >>> new_char
-    {'X-coordinate': 2, 'Y-coordinate': 1, 'HP': 20, 'Max HP': 20, 'EX': 5, 'Level': 3, 'key': False}
+    {'Level': 3, 'EX': 5, 'HP': 20, 'Max HP': 20}
     """
     if character["Level"] == 1 and character["EX"] >= 10:
         character["Level"] = 2

@@ -92,8 +92,8 @@ def game():  # called from main
 
 
 def main():
-    pass
+    game()
 
 
 if __name__ == "__main__":
-    game()
+    main()

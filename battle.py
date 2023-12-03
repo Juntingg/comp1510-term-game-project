@@ -26,12 +26,25 @@ def is_alive(character):
 
 
 def there_is_an_attack():
+    """
+    Check if there is a random attack
+
+    This function simulates a random encounter with an enemy. It generates a random number between 1 and 5
+    and returns True if the number is 1, indicating an attack. Otherwise, it returns False.
+
+    :postcondition: determine if a random foe appears
+    :return: True if a random enemy appears else False
+    """
     attack = random.randint(1, 5)
     if attack == 1:
         return True
 
 
 def dodge_enemy_attack():
+    """
+
+    :return:
+    """
     enemy_attack = random.choice(["R", "L"])
     return enemy_attack
 

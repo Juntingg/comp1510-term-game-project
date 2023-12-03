@@ -56,27 +56,34 @@ def dodge_enemy_attack():
     return enemy_attack
 
 
-def dodge_attack(character, reduced_hp):
+def ask_dodge_direction():
     """
-    Simulate the character's attempt to dodge an enemy attack
+    Prompt the user to choose a dodge direction (L or R) with a 50% chance to dodge the attack
 
-    Prompt the user to choose to dodge to the right or left with a 50% chance of success.
-    If the user's dodge direction match the randomly chosen enemy attack direction, print
-    a success message indicating successful dodge. Otherwise, reduce the character's HP
-    and prints a failure message.
-
-    :precondition: The 'character' parameter must be a dictionary containing 'HP' key
-    :precondition: 'reduced_hp' must be a positive integer representing the amount of HP reduced
-    :param character: A dictionary representing the character's attributes, including 'HP'
-    :param reduced_hp: An integer representing the amount of reduced HP if the dodge fails
-    :postcondition: Print a success message if user dodge the attack, otherwise reduces
-                    the character's HP by the specified amount and prints a failure message
+    :postcondition: Prompt the user to choose direction until valid input is entered
+    :return: A string representing the user's chosen dodge direction ('R' for right or 'L' for left)
     """
     print("Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)")
     user_dodge = input("R for right 👉, L for left 👈. [Enter R or L]: ").strip().upper()
     while user_dodge not in ["L", "R"]:
         print("That is not a valid input. Please try again!")
-        user_dodge = input("R for right, L for left. [Enter R or L]: ").strip().upper()
+        user_dodge = input("R for right 👉, L for left 👈. [Enter R or L]: ").strip().upper()
+    return user_dodge
+
+
+def dodge_attack(character, reduced_hp, user_dodge):
+    """
+    Determine if the character dodge an enemy attack
+
+    :precondition: The 'character' dictionary must contain the 'HP' key
+    :precondition: 'reduced_hp' must be a positive integer representing the amount of HP reduced
+    :precondition: 'user_dodge' must be a string with a value of 'L' or 'R'
+    :param character: A dictionary representing the character's attributes, including 'HP'
+    :param reduced_hp: An integer representing the amount of reduced HP if the dodge fails
+    :param user_dodge: A string representing the user's chosen dodge direction ('L' or 'R')
+    :postcondition: If the 'user_dodge' match the enemy attack direction, print a success
+                    message. Otherwise, reduce the character's HP and prints a failure message
+    """
     if user_dodge == dodge_enemy_attack():
         print("👍 Nice! You dodge the attack!")
     else:
@@ -87,7 +94,8 @@ def dodge_attack(character, reduced_hp):
 def attack_battle(character):
     enemy = random.choice(["🦇 bat", "🐻 bear", "🐗 boar", "🐍 snake"])
     print(f"❗Suddenly! A {enemy} emerges and launches an attack on you!")
-    dodge_attack(character, 2)
+    user_dodge = ask_dodge_direction()
+    dodge_attack(character, 2, user_dodge)
     character["EX"] += 3
     print("⚔️ You unleash a powerful strike and defeat the enemy! EX + 3")
 
@@ -110,7 +118,8 @@ def fight_dragon(character):
                       "The dragon roars at you!"]
     for count in range(3):
         print(narration_list[count])
-        dodge_attack(character, 5)
+        user_dodge = ask_dodge_direction()
+        dodge_attack(character, 5, user_dodge)
         if not is_alive(character):
             print("☠️ Sorry, you die! You lose the game.")
             return

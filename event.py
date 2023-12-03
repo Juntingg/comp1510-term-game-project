@@ -30,6 +30,7 @@ def get_valid_direction(character, valid_input):
     else:
         return valid_input
 
+
 def game_introduction():
     print("You are a warrior. It is said that within a forest lies a mysterious castle guarded\n"
           "by a dragon, protecting a treasure. Today, armed with your courage and sword, you\n"
@@ -120,32 +121,41 @@ def trigger_random_events(board, character):
     print(board)
 
 
+def hole_movement(distance, user_input):
+    if distance[0] >= 80 or distance[0] <= -40 or distance[1] >= 80 or distance[1] <= -40:
+        print("It seems like you are going too far? Maybe try the opposite direction...")
+    if user_input == "N":
+        distance[0] -= 10
+    elif user_input == "E":
+        distance[1] -= 10
+    elif user_input == "S":
+        distance[0] += 10
+    elif user_input == "W":
+        distance[1] += 10
+    print("It's still pitch black. Keep moving forward...")
+    print(distance)
+
+
 def trigger_hole_event(character):
     distance = [40, 40]
     counter = 0
     while distance[0] != 0 or distance[1] != 0:
         user_input = get_valid_user_input()
-        direction = get_valid_direction(character, user_input)
-        counter += 1
-        if counter == 40:
-            print("It seems like you've been wandering around in the cave for too long, feeling exhausted.\n"
-                  "Just as you were starting to feel a bit desperate, it's as if the gods heard your plea...\n"
-                  "A mysterious force transports you out of the cave, leaving a key quietly resting in your hand.\n"
-                  "Your unwavering persistence appears to have caught the attention of the divine.")
-            break
-        if distance[0] >= 80 or distance[0] <= -40 or distance[1] >= 80 or distance[1] <= -40:
-            print("It seems like you are going too far? Maybe try the opposite direction...")
-        if direction == "N":
-            distance[0] -= 10
-        elif direction == "E":
-            distance[1] -= 10
-        elif direction == "S":
-            distance[0] += 10
-        elif direction == "W":
-            distance[1] += 10
-        print("It's still pitch black. Keep moving forward...")
-        print(distance)
+        valid_input = get_valid_direction(character, user_input)
+        if valid_input in ["S", "N", "W", "E"]:
+            counter += 1
+            if counter == 20:
+                print("You feel a little uncomfortable, and the darkness makes you feel disoriented.\n"
+                      "But you have no choice but to move forward...")
+            if counter == 40:
+                print("It seems like you've been wandering around in the cave for too long, feeling exhausted.\n"
+                      "Just as you were starting to feel a bit desperate, it's as if the gods heard your plea...\n"
+                      "A mysterious force transports you out of the cave, leaving a key quietly resting in your hand.\n"
+                      "Your unwavering persistence appears to have caught the attention of the divine.\n"
+                      "After a burst of white light, there is something lied in your hand.")
+                break
+            hole_movement(distance, valid_input)
 
     character["key"] = True
-    print("Look what you've found! It seems to be a key... Could it be meant for opening the gates of the castle?\n"
+    print("Look what you've gotten! It seems to be a key... Could it be meant for opening the gates of the castle?\n"
           "Before you could ponder further, a mysterious force transports you out of the hole.")

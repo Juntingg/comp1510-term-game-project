@@ -179,11 +179,11 @@ def hole_movement(distance, user_input):
     if user_input == "N":
         distance[0] -= 10
     elif user_input == "E":
-        distance[1] -= 10
+        distance[1] += 10
     elif user_input == "S":
         distance[0] += 10
     elif user_input == "W":
-        distance[1] += 10
+        distance[1] -= 10
     print("It's still pitch black. Keep moving forward...")
     # print(distance)
 

@@ -52,6 +52,27 @@ def make_board(rows, columns, my_character):
 
 
 def validate_move(board, my_character, direction):
+    """
+    Validate character's movement
+
+    Checks if the movement in the given direction is within the boundaries of the board
+
+    :precondition: 'board' must contain coordinates as keys representing the game board
+    :precondition: 'my_character' must contain 'X-coordinate' and 'Y-coordinate' keys with valid integer values
+    :precondition: 'direction' parameter must be a string with a value of 'N', 'S', 'E', or 'W'.
+    :param board: A dictionary representing the game board with coordinates as keys
+    :param my_character: A dictionary representing the character's attributes
+    :param direction: A string representing the direction ('N', 'S', 'E', or 'W')
+    :postcondition: Check if the character's movement in the specified direction is within the board's boundaries
+    :return: True if the move is valid, otherwise False
+
+    >>> my_board = {(0, 0): 'A', (1, 0): 'B', (0, 1): 'C', (1, 1): 'D'}
+    >>> my_char = {"X-coordinate": 0, "Y-coordinate": 0}
+    >>> validate_move(my_board, my_char, 'N')
+    False
+    >>> validate_move(my_board, my_char, 'E')
+    True
+    """
     x_max_coordinator = max((key[0]) for key in board.keys())
     y_max_coordinator = max((key[1]) for key in board.keys())
     if my_character["X-coordinate"] == x_max_coordinator and direction == "E":

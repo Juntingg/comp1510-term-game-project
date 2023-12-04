@@ -23,7 +23,7 @@ def get_valid_user_input():
             print("❌ That is not a valid input, try again!")
 
 
-def get_valid_direction(character, valid_input):
+def get_valid_direction(character):
     """
     Get a valid direction for character movement.
 
@@ -35,12 +35,11 @@ def get_valid_direction(character, valid_input):
     :precondition: The 'valid_input' parameter must be a string representing a valid game
                    request or direction
     :param character: A dictionary representing the character's attributes, including 'hole'
-    :param valid_input: A string representing a valid game state ('STATE', 'HELP', 'HINT')
-                        or a direction
     :postcondition: Display corresponding message and prompt the user to enter a valid direction
 
     :return: A string representing a valid direction for character movement ('N', 'S', 'W', 'E').
     """
+    valid_input = get_valid_user_input()
     while valid_input in ["STATE", "HELP", "HINT"]:
         if valid_input == "STATE":
             describe_user_state(character)
@@ -55,7 +54,7 @@ def get_valid_direction(character, valid_input):
                   " 4.'W' for west direction\n"
                   "You can also input 'state' to check your character's attributes or 'help' to get instruction.\n"
                   "Tell you quietly: you can type 'hint' if you couldn't find the key!\n"
-                  "---------------------------------------------------------------------------------------\n")
+                  "---------------------------------------------------------------------------------------")
         valid_input = get_valid_user_input()
     return valid_input
 
@@ -204,8 +203,8 @@ def trigger_hole_event(character):
     distance = [30, 30]
     counter = 0
     while distance[0] != 0 or distance[1] != 0:
-        user_input = get_valid_user_input()
-        valid_input = get_valid_direction(character, user_input)
+        get_valid_user_input()
+        valid_input = get_valid_direction(character)
         if valid_input in ["S", "N", "W", "E"]:
             counter += 1
             if counter == 20:

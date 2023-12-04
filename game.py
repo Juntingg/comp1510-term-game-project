@@ -34,6 +34,23 @@ def game_introduction():
 
 
 def make_board(rows, columns, my_character):
+    """
+    Create a new game board
+
+    Create a board with the given number of rows and columns. Each cell is assigned
+    a random event from a predefined set of choices. The bottom-right corner is set as "castle",
+    the top-left corner as "begin", and a random cell (excluding corners) as "hole"
+
+    :precondition: 'rows' and 'columns' must be positive integers
+    :precondition: The 'my_character' dictionary must be provided and contain valid character attributes
+    :param rows: The number of rows in the board
+    :param columns: The number of columns in the board
+    :param my_character: A dictionary representing the character's attributes
+    :postcondition: Generate a board with specified dimensions, assigns events to cells, places "castle",
+                    "begin", and "hole" events at fixed locations, and updates the 'my_character' dictionary
+                    with the location of the hole
+    :return: A dictionary representing the generated game board
+    """
     events_choices = ["nothing", "mushroom", "mushroom", "wolf", "wolf", "wooden chest"]
     new_board = {}
     for row in range(rows):
@@ -42,10 +59,10 @@ def make_board(rows, columns, my_character):
     # the right bottom corner of the game board must be a fixed value "castle"
     new_board[(rows - 1, columns - 1)] = "castle"
     new_board[(0, 0)] = "begin"
-    hole_x, hole_y = 4, 4
-    while (hole_x == 4 and hole_y == 4) or (hole_x == 0 and hole_y == 0):
-        hole_x = random.randint(0, 4)
-        hole_y = random.randint(0, 4)
+    hole_x, hole_y = rows - 1, columns - 1
+    while (hole_x == (rows - 1) and hole_y == (columns - 1)) or (hole_x == 0 and hole_y == 0):
+        hole_x = random.randint(0, (rows - 1))
+        hole_y = random.randint(0, (columns - 1))
     new_board[(hole_x, hole_y)] = "hole"
     my_character["hole"] = (hole_x, hole_y)
     return new_board

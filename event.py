@@ -98,8 +98,8 @@ def describe_user_state(character):
     Your current location: (2,2)
     HP:5/15 EX:3 Level:2
     """
-    print(f"Your current location: ({character['X-coordinate']},{character['Y-coordinate']})")
-    print(f"HP:{character['HP']}/{character['Max HP']} EX:{character['EX']} "
+    print(f"Your current location: ({character['X-coordinate']},{character['Y-coordinate']})\n"
+          f"HP:{character['HP']}/{character['Max HP']} EX:{character['EX']} "
           f"Level:{character['Level']}")
 
 

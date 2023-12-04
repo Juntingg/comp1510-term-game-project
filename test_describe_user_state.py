@@ -1,5 +1,6 @@
 """
-ADD A DOCSTRING
+Caroline Su
+A01369603
 """
 import io
 from unittest import TestCase

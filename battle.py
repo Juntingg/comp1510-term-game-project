@@ -92,6 +92,17 @@ def dodge_attack(character, reduced_hp, user_dodge):
 
 
 def attack_battle(character):
+    """
+    Simulate a battle scenario where an enemy attack the character
+
+    An enemy randomly appears and launches an attack on the character. The character
+    is prompted to choose a dodge direction. If the dodge is successful, the character
+    avoids damage; otherwise, HP is reduced by 2. After the attack, EX + 3.
+
+    :precondition: The 'character' dictionary must be provided and must contain 'HP' and 'EX' keys
+    :param character: A dictionary representing the character's attributes, including 'HP' and 'EX'
+    :postcondition: Character is potentially losing HP and must gain EX
+    """
     enemy = random.choice(["🦇 bat", "🐻 bear", "🐗 boar", "🐍 snake"])
     print(f"❗Suddenly! A {enemy} emerges and launches an attack on you!")
     user_dodge = ask_dodge_direction()

@@ -120,8 +120,8 @@ def game():  # called from main
         if (event.check_reach_level_3(my_character) and battle.is_alive(my_character)
                 and my_character["key"] and character.is_arrived_castle(my_character, rows, columns)):
             break
-        valid_input = event.get_valid_user_input()
-        valid_direction = event.get_valid_direction(my_character, valid_input)
+        event.get_valid_user_input()
+        valid_direction = event.get_valid_direction(my_character)
         # if the character is not at the boundary and the direction is valid
         if validate_move(board, my_character, valid_direction):
             character.move_character(my_character, valid_direction)

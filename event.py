@@ -188,6 +188,28 @@ def hole_movement(distance, user_input):
     # print(distance)
 
 
+def handle_counter(my_counter):
+    """
+    Print corresponding messages based on specific counter conditions
+
+    :param my_counter: An integer representing the current counter value
+    :precondition: 'my_counter' must be a positive integer
+    :postcondition: Prints messages based on specific counter values
+    :return: False if the counter reaches 40, otherwise True
+    """
+    if my_counter == 20:
+        print("You feel a little uncomfortable, and the darkness makes you feel disoriented.\n"
+              "But you have no choice but to move forward...")
+    if my_counter == 40:
+        print("It seems like you've been wandering around in the cave for too long, feeling exhausted.\n"
+              "Just as you were starting to feel a bit desperate, it's as if the gods heard your plea...\n"
+              "A mysterious force transports you out of the cave, leaving a key quietly resting in your hand.\n"
+              "Your unwavering persistence appears to have caught the attention of the divine.\n"
+              "After a burst of white light, there is something lied in your hand.")
+        return False
+    return True
+
+
 def trigger_hole_event(character):
     """
     Simulate events when the character falls into a hole
@@ -207,15 +229,8 @@ def trigger_hole_event(character):
         valid_input = get_valid_direction(character)
         if valid_input in ["S", "N", "W", "E"]:
             counter += 1
-            if counter == 20:
-                print("You feel a little uncomfortable, and the darkness makes you feel disoriented.\n"
-                      "But you have no choice but to move forward...")
-            if counter == 40:
-                print("It seems like you've been wandering around in the cave for too long, feeling exhausted.\n"
-                      "Just as you were starting to feel a bit desperate, it's as if the gods heard your plea...\n"
-                      "A mysterious force transports you out of the cave, leaving a key quietly resting in your hand.\n"
-                      "Your unwavering persistence appears to have caught the attention of the divine.\n"
-                      "After a burst of white light, there is something lied in your hand.")
+            reach_the_end = handle_counter(counter)
+            if reach_the_end:
                 break
             hole_movement(distance, valid_input)
 

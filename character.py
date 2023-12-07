@@ -66,9 +66,9 @@ def is_arrived_castle(character, rows, columns):
                     otherwise return False
     :return: A boolean value indicating whether the character has arrived at the castle
 
-    >>> is_arrived_castle({"X-coordinate": 4, "Y-coordinate": 4}, 5, 5)
+    >>> is_arrived_castle({"X-coordinate": 6, "Y-coordinate": 6}, 7, 7)
     True
-    >>> is_arrived_castle({"X-coordinate": 2, "Y-coordinate": 4}, 5, 5)
+    >>> is_arrived_castle({"X-coordinate": 2, "Y-coordinate": 4}, 7, 7)
     False
     """
     return character["X-coordinate"] == (rows - 1) and character["Y-coordinate"] == (columns - 1)

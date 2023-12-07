@@ -111,8 +111,8 @@ def game():  # called from main
     # initiate the game configuration
     game_introduction()
     my_character = character.make_character()
-    rows = 5
-    columns = 5
+    rows = 7
+    columns = 7
     board = make_board(rows, columns, my_character)
     key_reminder = False
     dragon_reminder = False
@@ -120,7 +120,6 @@ def game():  # called from main
         if (event.check_reach_level_3(my_character) and battle.is_alive(my_character)
                 and my_character["key"] and character.is_arrived_castle(my_character, rows, columns)):
             break
-        event.get_valid_user_input()
         valid_direction = event.get_valid_direction(my_character)
         # if the character is not at the boundary and the direction is valid
         if validate_move(board, my_character, valid_direction):

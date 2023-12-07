@@ -150,7 +150,7 @@ def game():  # called from main
 
     # boss fight
     if character.is_arrived_castle(my_character, rows, columns):
-        print("💢 Your arrival wake up the dragon!")
+        print("💢 🐉 🔥Your arrival wake up the dragon!")
         battle.fight_dragon(my_character)
 
 

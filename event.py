@@ -206,8 +206,8 @@ def handle_counter(my_counter):
               "A mysterious force transports you out of the cave, leaving a key quietly resting in your hand.\n"
               "Your unwavering persistence appears to have caught the attention of the divine.\n"
               "After a burst of white light, there is something lied in your hand.")
-        return False
-    return True
+        return True
+    return False
 
 
 def trigger_hole_event(character):
@@ -225,7 +225,6 @@ def trigger_hole_event(character):
     distance = [30, 30]
     counter = 0
     while distance[0] != 0 or distance[1] != 0:
-        get_valid_user_input()
         valid_input = get_valid_direction(character)
         if valid_input in ["S", "N", "W", "E"]:
             counter += 1
@@ -235,6 +234,6 @@ def trigger_hole_event(character):
             hole_movement(distance, valid_input)
 
     character["key"] = True
-    print("Look what you've gotten! It seems to be a key... Could it be meant for opening the gates of the castle?\n"
+    print("Look what you've gotten!🗝️ It seems to be a key... Could it be meant for opening the gates of the castle?\n"
           "Before you could ponder further, a mysterious force transports you out of the hole."
           "Please continue to explore the forest...")

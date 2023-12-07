@@ -107,8 +107,8 @@ def attack_battle(character):
     print(f"❗Suddenly! A {enemy} emerges and launches an attack on you!")
     user_dodge = ask_dodge_direction()
     dodge_attack(character, 2, user_dodge)
-    character["EX"] += 3
-    print("⚔️ You unleash a powerful strike and defeat the enemy! EX + 3")
+    character["EX"] += 2
+    print("⚔️ You unleash a powerful strike and defeat the enemy! EX + 2")
 
 
 def fight_dragon(character):

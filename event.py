@@ -2,6 +2,7 @@
 Caroline Su
 A01369603
 """
+import itertools
 
 
 def get_valid_user_input():
@@ -223,11 +224,13 @@ def trigger_hole_event(character):
     :postcondition: character's key attribute will have a boolean value of True
     """
     distance = [30, 30]
-    counter = 0
+    # counter = 0
+    counter_iter = itertools.count(1)
     while distance[0] != 0 or distance[1] != 0:
         valid_input = get_valid_direction(character)
         if valid_input in ["S", "N", "W", "E"]:
-            counter += 1
+            # counter += 1
+            counter = next(counter_iter)
             reach_the_end = handle_counter(counter)
             if reach_the_end:
                 break

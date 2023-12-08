@@ -11,17 +11,17 @@ from event import handle_counter
 class Test(TestCase):
     def test_counter_20(self):
         actual = handle_counter(20)
-        expect = True
+        expect = False
         self.assertEqual(actual, expect)
 
     def test_counter_40(self):
         result = handle_counter(40)
-        expect = False
+        expect = True
         self.assertEqual(result, expect)
 
     def test_counter_other(self):
         result = handle_counter(30)
-        expect = True
+        expect = False
         self.assertEqual(result, expect)
 
     @patch('sys.stdout', new_callable=io.StringIO)

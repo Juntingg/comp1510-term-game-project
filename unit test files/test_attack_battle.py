@@ -13,7 +13,7 @@ class Test(TestCase):
     @patch('builtins.input', return_value="L")
     @patch("random.choice", return_value="L")
     def test_character_gain_EX(self, _, __, ___):
-        expect = {'EX': 3, 'HP': 10, 'Max HP': 10}
+        expect = {'EX': 2, 'HP': 10, 'Max HP': 10}
         my_character = {'EX': 0, 'HP': 10, 'Max HP': 10}
         attack_battle(my_character)
         self.assertEqual(expect, my_character)
@@ -25,7 +25,7 @@ class Test(TestCase):
         expect = "❗Suddenly! A 🦇 bat emerges and launches an attack on you!\n"\
                  "Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)\n"\
                  "💥 Oh no! You did not dodge the attack! HP - 2\n"\
-                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 3\n"
+                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 2\n"
         my_character = {'EX': 0, 'HP': 10, 'Max HP': 10}
         attack_battle(my_character)
         the_game_printed_this = mock_output.getvalue()
@@ -38,7 +38,7 @@ class Test(TestCase):
         expect = "❗Suddenly! A 🐻 bear emerges and launches an attack on you!\n" \
                  "Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)\n" \
                  "💥 Oh no! You did not dodge the attack! HP - 2\n" \
-                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 3\n"
+                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 2\n"
         my_character = {'EX': 0, 'HP': 10, 'Max HP': 10}
         attack_battle(my_character)
         the_game_printed_this = mock_output.getvalue()
@@ -51,7 +51,7 @@ class Test(TestCase):
         expect = "❗Suddenly! A 🐍 snake emerges and launches an attack on you!\n" \
                  "Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)\n" \
                  "💥 Oh no! You did not dodge the attack! HP - 2\n" \
-                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 3\n"
+                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 2\n"
         my_character = {'EX': 0, 'HP': 10, 'Max HP': 10}
         attack_battle(my_character)
         the_game_printed_this = mock_output.getvalue()
@@ -64,7 +64,7 @@ class Test(TestCase):
         expect = "❗Suddenly! A 🐗 boar emerges and launches an attack on you!\n" \
                  "Would you like to dodge to the right or to the left?(You have 50% chance to dodge the attack)\n" \
                  "💥 Oh no! You did not dodge the attack! HP - 2\n" \
-                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 3\n"
+                 "⚔️ You unleash a powerful strike and defeat the enemy! EX + 2\n"
         my_character = {'EX': 0, 'HP': 10, 'Max HP': 10}
         attack_battle(my_character)
         the_game_printed_this = mock_output.getvalue()

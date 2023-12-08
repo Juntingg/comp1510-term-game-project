@@ -1,17 +1,10 @@
 """
-ADD A DOCSTRING
+Caroline Su
+A01369603
 """
 from unittest import TestCase
 from unittest.mock import patch
 from event import trigger_hole_event
-
-
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()
 
 
 class Test(TestCase):
